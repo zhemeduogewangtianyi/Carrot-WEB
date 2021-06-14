@@ -33,3 +33,4 @@ build/
 .vscode/
 .mvn
 .Carrot-Buffet.iml
+./react-app/node_modules
