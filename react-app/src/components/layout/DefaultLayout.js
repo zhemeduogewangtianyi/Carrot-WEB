@@ -20,25 +20,31 @@ class DefaultLayout extends Component {
     render() {
         return (
             <div>
+
                 <Layout>
+
                     <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
 
                         <div className="logo" />
                         <CarrotMenu />
 
                     </Header>
+
                     <Content style={{ padding: '0 50px', marginTop: 64 }}>
 
                         <CarrotContent style={{ background: '#fff', padding: 24, minHeight: 380 }} />
 
                     </Content>
+
                     <Footer style={{ textAlign: 'center' }}>
 
                         <p><Icon type="global" /><a onClick={this.getUrl}> 加入我们</a></p>
                         <Icon type="copyright" /> {new Date().getFullYear()} 萝卜头出品
 
                     </Footer>
+
                 </Layout>
+
             </div>
         )
     }
