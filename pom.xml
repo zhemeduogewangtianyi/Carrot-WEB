@@ -2,15 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <modules>
-        <module>Carrot-Start</module>
-        <module>Carrot-Buffet-Service</module>
-    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.1</version>
+        <version>2.4.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -19,14 +15,41 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Carrot-Buffet</name>
-    <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
-        <spring.version>2.5.1</spring.version>
+        <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+        <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
     </properties>
 
+    <modules>
+        <module>Carrot-Buffet-Start</module>
+        <module>Carrot-Buffet-Service</module>
+    </modules>
+
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -40,31 +63,6 @@
 
         <dependencies>
 
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-freemarker</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-tomcat</artifactId>
-                <scope>provided</scope>
-                <version>${spring.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
-                <version>${spring.version}</version>
-            </dependency>
 
         </dependencies>
 
@@ -72,18 +70,130 @@
 
     <build>
         <plugins>
+
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
             </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>com.github.eirslett</groupId>-->
+<!--                <artifactId>frontend-maven-plugin</artifactId>-->
+<!--                <version>${frontend-maven-plugin.version}</version>-->
+<!--                <executions>-->
+
+<!--                    <execution>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <id>install node and npm</id>-->
+<!--                        <goals>-->
+<!--                            <goal>install-node-and-npm</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <nodeVersion>v16.2.0</nodeVersion>-->
+<!--                            <npmVersion>7.13.0</npmVersion>-->
+<!--                            <nodeDownloadRoot>http://npm.taobao.org/mirrors/node/</nodeDownloadRoot>-->
+<!--                            <npmDownloadRoot>http://registry.npm.taobao.org/npm/-/</npmDownloadRoot>-->
+<!--                            <workingDirectory>${user.dir}/react-app/</workingDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+
+<!--                    <execution>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <id>npm install</id>-->
+<!--                        <goals>-->
+<!--                            <goal>npm</goal>-->
+<!--                        </goals>-->
+
+<!--                        <configuration>-->
+<!--                            <arguments>install</arguments>-->
+<!--                            <workingDirectory>${user.dir}/react-app/</workingDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+
+<!--                    <execution>-->
+
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <id>npm run build</id>-->
+<!--                        <goals>-->
+<!--                            <goal>npm</goal>-->
+<!--                        </goals>-->
+
+<!--                        <configuration>-->
+<!--                            <arguments>run build</arguments>-->
+<!--                            <workingDirectory>${user.dir}/react-app/</workingDirectory>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+
+<!--                </executions>-->
+
+<!--            </plugin>-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven-antrun-plugin.version}</version>
+                <executions>
+
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+
+                                <delete verbose="true" includeemptydirs="true">
+                                    <fileset dir="${user.dir}/Carrot-Buffet-Start/src/main/resources/templates">
+                                        <include name="**/*" />
+                                    </fileset>
+                                </delete>
+
+                                <delete verbose="true" includeemptydirs="true">
+                                    <fileset dir="${user.dir}/Carrot-Buffet-Start/src/main/resources/static">
+                                        <include name="**/*" />
+                                    </fileset>
+                                </delete>
+
+                                <delete verbose="true" includeemptydirs="true">
+                                    <fileset dir="${user.dir}/Carrot-Buffet-Start/src/main/resources/">
+                                        <include name="manifest.json" />
+                                    </fileset>
+                                </delete>
+
+                                <copy todir="${user.dir}/Carrot-Buffet-Start/src/main/resources/templates/">
+                                    <fileset dir="${user.dir}/react-app/build/">
+                                        <include name="manifest.json" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="${user.dir}/Carrot-Buffet-Start/src/main/resources/templates">
+                                    <fileset dir="${user.dir}/react-app/build/">
+                                        <include name="index.html" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="${user.dir}/Carrot-Buffet-Start/src/main/resources/static">
+                                    <fileset dir="${user.dir}/react-app/build/">
+                                        <include name="favicon.ico" />
+                                    </fileset>
+                                </copy>
+
+                                <copy todir="${user.dir}/Carrot-Buffet-Start/src/main/resources/static/js">
+                                    <fileset dir="${user.dir}/react-app/build/static/js/" excludes="**/*.css" />
+                                </copy>
+
+                                <copy todir="${user.dir}/Carrot-Buffet-Start/src/main/resources/static/css">
+                                    <fileset dir="${user.dir}/react-app/build/static/css/" excludes="**/*.js" />
+                                </copy>
+
+                            </target>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
