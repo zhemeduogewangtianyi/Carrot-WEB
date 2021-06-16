@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 
-import { Layout,Icon } from 'antd';
+import { Layout,Icon,Row,Col } from 'antd';
 import CarrotMenu from "../menu/CarrotMenu";
 import CarrotContent from "../content/CarrotContent";
 
@@ -23,12 +23,18 @@ class DefaultLayout extends Component {
 
                 <Layout>
 
-                    <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+                    <Row>
+                        <Col span={24}>
+                            <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+                                <div className="logo" />
+                                <CarrotMenu />
 
-                        <div className="logo" />
-                        <CarrotMenu />
+                            </Header>
+                        </Col>
+                        {/*<Col span={12}>col-12</Col>*/}
+                    </Row>
 
-                    </Header>
+
 
                     <Content style={{ padding: '0 50px', marginTop: 64 }}>
 
